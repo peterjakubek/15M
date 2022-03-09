@@ -1,0 +1,5 @@
+var/
+src/node_modules
+src/vendor
+public/css
+public/js

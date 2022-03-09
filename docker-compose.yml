@@ -1,0 +1,46 @@
+version: '3.4'
+services:
+  app:
+    image: ambientum/php:7.2-nginx
+    container_name: 15marketing-app
+    ports:
+      - 80:8080
+    volumes:
+      - ./src:/var/www/app
+    depends_on:
+      - mysql
+    links:
+      - mysql
+    networks:
+      - laravel
+
+  mysql:
+    container_name: 15marketing-mysql
+    image: mysql:5.7
+    ports:
+      - 3306:3306
+    networks:
+      - laravel
+    volumes:
+      - ./var/mysql:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: 15marketing
+      MYSQL_DATABASE: 15marketing
+      MYSQL_USER: 15marketing
+      MYSQL_PASSWORD: 15marketing
+      TZ: UTC
+
+  selenium:
+    image: selenium/standalone-chrome
+    container_name: 15marketing-selenium
+    networks:
+     - laravel
+
+networks:
+  laravel:
+    driver: bridge
+
+volumes:
+  mysql:
+    driver: local
+
