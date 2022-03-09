@@ -1,7 +1,7 @@
 version: '3.4'
 services:
   app:
-    image: ambientum/php:7.2-nginx
+    image: ambientum/php:7.4-nginx
     container_name: 15marketing-app
     ports:
       - 80:8080
