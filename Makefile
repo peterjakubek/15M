@@ -1,6 +1,13 @@
 up:
 	docker-compose -f docker-compose.yml up -d
 
+rebuild: down
+	docker rm -f 15marketing-selenium 15marketing-app 15marketing-mysql
+	docker-compose -f docker-compose.yml build --force-rm --no-cache
+
+clean:
+	sudo rm -rf var/mysql src/vendor src/node_modules
+
 down:
 	docker-compose -f docker-compose.yml down
 
