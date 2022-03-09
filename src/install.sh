@@ -4,7 +4,6 @@ sudo apk update && sudo apk add nodejs npm
 
 COMPOSER_MEMORY_LIMIT=-1 composer install
 npm install
-npm run install
 
 php artisan migrate
 php artisan dusk

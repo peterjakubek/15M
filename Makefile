@@ -20,5 +20,5 @@ migrate:
 test:
 	clear && docker restart 15marketing-selenium > /dev/null && sleep 5 && docker exec -it 15marketing-app bash -c "cd tests && php ../vendor/bin/behat"
 
-install-dusk:
-	docker exec -it 15marketing-app php artisan dusk:install
+install:
+	docker exec -it 15marketing-app bash install.sh
