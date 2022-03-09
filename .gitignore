@@ -3,3 +3,4 @@ src/node_modules
 src/vendor
 public/css
 public/js
+tests/Browser/screenshots
