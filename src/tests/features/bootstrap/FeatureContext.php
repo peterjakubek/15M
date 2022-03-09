@@ -9,9 +9,6 @@ use Laravel\Dusk\Browser;
  */
 class FeatureContext extends DuskTestCase implements Context
 {
-    /** @var Browser $browser */
-    private $browser;
-
     public function __construct($name = null, array $data = [], $dataName = '')
     {
         parent::__construct($name, $data, $dataName);
@@ -22,7 +19,7 @@ class FeatureContext extends DuskTestCase implements Context
     /**
      * @When /^homepage is visited$/
      */
-    public function homepageIsVisited()
+    public function homepageIsVisited(): void
     {
         $this->browse(function (Browser $browser) {
             $browser->visit('/');
