@@ -2,20 +2,25 @@ Feature: Login
   In order to use the site the user should be able to login
 
   Scenario: login with invalid password
-    When login page is visited
-     And login with invalid credentials
-    Then login error message is displayed
+   Given I am on "/login"
+    When login with invalid credentials
+    Then I see "These credentials do not match our records."
+     And I should be on "/login"
 
   Scenario: login with valid password
-    When login page is visited
+   Given I am on "/login"
      And login with valid credentials
-    Then you are logged in message is displayed
+    Then I see "You are logged in!"
+     And I should be on "/home"
 
   Scenario: logout
+   Given I am on "/login"
     When user logs out
-    Then user is logged out
+    Then I see link "Login"
 
   Scenario: forgot password
-    When login page is visited
-     And user clicks on forgot your password
-    Then forgot password page should be displayed
+   Given I am on "/login"
+    When I click link "Forgot Your Password?"
+    Then I should be on "/password/reset"
+     And I see "Reset Password"
+     And I see "Send Password Reset Link"

@@ -17,22 +17,52 @@ class FeatureContext extends DuskTestCase implements Context
     }
 
     /**
-     * @When /^homepage is visited$/
+     * @Given I am on :url
      */
-    public function homepageIsVisited(): void
+    public function iAmOn($url)
     {
-        $this->browse(function (Browser $browser) {
-            $browser->visit('/');
+        $this->browse(function (Browser $browser) use ($url) {
+            $browser->visit($url);
         });
     }
 
     /**
-     * @When /^login page is visited$/
+     * @Then I see :text
      */
-    public function loginPageIsVisited(): void
+    public function iSee($text)
     {
-        $this->browse(function (Browser $browser) {
-            $browser->visit('/login');
+        $this->browse(function (Browser $browser) use ($text) {
+            $browser->assertSee($text);
+        });
+    }
+
+    /**
+     * @Then I should be on :url
+     */
+    public function iShouldBeOn($url)
+    {
+        $this->browse(function (Browser $browser) use ($url) {
+            $browser->assertPathIs($url);
+        });
+    }
+
+    /**
+     * @Given I click link :link
+     */
+    public function iClickLink($link)
+    {
+        $this->browse(function (Browser $browser) use ($link) {
+            $browser->clickLink($link);
+        });
+    }
+
+    /**
+     * @Then I see link :link
+     */
+    public function iSeeLink($link)
+    {
+        $this->browse(function (Browser $browser) use ($link) {
+            $browser->assertSeeLink($link);
         });
     }
 
@@ -45,9 +75,7 @@ class FeatureContext extends DuskTestCase implements Context
             $browser
                 ->type('email', 'thisis@myemail.com')
                 ->type('password', '123456')
-                ->press('Login')
-                ->assertPathIs('/home')
-                ->assertDontSee('These credentials do not match our records.');
+                ->press('Login');
         });
     }
 
@@ -60,28 +88,7 @@ class FeatureContext extends DuskTestCase implements Context
             $browser
                 ->type('email', 'foo@bar.com')
                 ->type('password', 'baz')
-                ->press('Login')
-                ->assertPathIs('/login');
-        });
-    }
-
-    /**
-     * @Then /^login error message is displayed$/
-     */
-    public function loginErrorMessageIsDisplayed()
-    {
-        $this->browse(function (Browser $browser) {
-            $browser->assertSee('These credentials do not match our records.');
-        });
-    }
-
-    /**
-     * @Then /^you are logged in message is displayed$/
-     */
-    public function youAreLoggedInMessageIsDisplayed()
-    {
-        $this->browse(function (Browser $browser) {
-            $browser->assertSee('You are logged in!');
+                ->press('Login');
         });
     }
 
@@ -94,48 +101,6 @@ class FeatureContext extends DuskTestCase implements Context
             $browser
                 ->clickLink('MyUsername')
                 ->clickLink('Logout');
-        });
-    }
-
-    /**
-     * @Then /^user is logged out$/
-     */
-    public function userIsLoggedOut()
-    {
-        $this->browse(function (Browser $browser) {
-            $browser
-                ->assertSeeLink('Login');
-        });
-    }
-
-    /**
-     * @Then /^user clicks on forgot your password$/
-     */
-    public function userClickOnForgotYourPassword()
-    {
-        $this->browse(function (Browser $browser) {
-            $browser->clickLink('Forgot Your Password?');
-        });
-    }
-
-    /**
-     * @When /^forgot password page should be displayed$/
-     */
-    public function forgotPasswordPageShouldBeDisplayed()
-    {
-        $this->browse(function (Browser $browser) {
-            $browser
-                ->assertPathIs('/password/reset');
-        });
-    }
-
-    /**
-     * @Then /^company greeting should be visible$/
-     */
-    public function companyGreetingShouldBeVisible()
-    {
-        $this->browse(function (Browser $browser) {
-            $browser->assertSee('Welcome, 15 Marketing');
         });
     }
 }
